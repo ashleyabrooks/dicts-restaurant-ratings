@@ -1,10 +1,13 @@
 
+import random
+
+
 def print_restaraunt_ratings(restaurant_ratings):
     """Print restaurant ratings in alphabetical order.
     """
 
     for restaurant, rating in sorted(restaurant_ratings.items()):
-        print restaurant, 'is rated at', rating + '.'    
+        print restaurant, 'is rated at', rating + '.'
 
 
 def add_user_restaurant_rating(restaurant_ratings):
@@ -15,10 +18,23 @@ def add_user_restaurant_rating(restaurant_ratings):
     add_restaurant_rating = raw_input('What rating do you want to give it?\n')
 
     restaurant_ratings[add_restaurant_name] = add_restaurant_rating
-    
+
     print_restaraunt_ratings(restaurant_ratings)
 
-    return restaurant_ratings
+
+def change_random_rating(restaurant_ratings):
+    """Change rating at random.
+    """
+
+    random_restaurant = random.choice(restaurant_ratings.keys())
+
+    print 'The random restaurant is {}, and it\'s rated at {}.'.format(
+        random_restaurant,
+        restaurant_ratings[random_restaurant],
+        )
+
+    restaurant_ratings[random_restaurant] = raw_input(
+        'What rating should we assign for {}?\n'.format(random_restaurant))
 
 
 def rate_restaurants(file_name):
@@ -40,10 +56,12 @@ def rate_restaurants(file_name):
     while True:
         choice_1 = '1. See current ratings,'
         choice_2 = '2. Add a new restaurant,'
-        choice_3 = '3. Quit'
+        choice_3 = '3. Update a random restaurant\'s rating,'
+        choice_4 = '4. Quit'
 
         try:
-            user_choice = int(raw_input('Would you like to {} {} or {}?\n'.format(choice_1, choice_2, choice_3)))
+            user_choice = int(raw_input('\nWould you like to\n{}\n{}\n{}\nor\n{}?\n'.format(
+                choice_1, choice_2, choice_3, choice_4)))
         except ValueError:
             print "Please provide an integer between 1 and 3."
             continue
@@ -51,8 +69,10 @@ def rate_restaurants(file_name):
         if user_choice == 1:
             print_restaraunt_ratings(restaurant_ratings)
         elif user_choice == 2:
-            restaurant_ratings = add_user_restaurant_rating(restaurant_ratings)
+            add_user_restaurant_rating(restaurant_ratings)
         elif user_choice == 3:
+            change_random_rating(restaurant_ratings)
+        elif user_choice == 4:
             break
         else:
             print "Please provide an integer between 1 and 3."
