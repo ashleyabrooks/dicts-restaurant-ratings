@@ -42,10 +42,20 @@ def rate_restaurants(file_name):
         choice_2 = '2. Add a new restaurant,'
         choice_3 = '3. Quit'
 
-        user_choice = raw_input('Would you like to {} {} {}'.format(choice_1, choice_2, choice_3))
+        try:
+            user_choice = int(raw_input('Would you like to {} {} or {}?\n'.format(choice_1, choice_2, choice_3)))
+        except ValueError:
+            print "Please provide an integer between 1 and 3."
+            continue
 
-    print_restaraunt_ratings(restaurant_ratings)
-    
-    restaurant_ratings = add_user_restaurant_rating(restaurant_ratings)
+        if user_choice == 1:
+            print_restaraunt_ratings(restaurant_ratings)
+        elif user_choice == 2:
+            restaurant_ratings = add_user_restaurant_rating(restaurant_ratings)
+        elif user_choice == 3:
+            break
+        else:
+            print "Please provide an integer between 1 and 3."
+
 
 rate_restaurants('scores.txt')
